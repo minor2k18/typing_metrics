@@ -4,7 +4,7 @@ Created on Mon Mar 12 02:41:59 2018
 
 @author: Hopeless
 """
-from time import time
+from time import time, sleep
 from random import randint
 
 # Calculate time
@@ -48,28 +48,36 @@ with open("texts.txt") as f:
 
 # Load one test at a time
 for test in tests:
-	print("Hit enter and start typing!\n")
-	print(test + "\n")
+	if(test!=""):
+		sleep(2) # Momentary pause
+		print("\nHit enter and start typing!\n")
+		sleep(2) # Momentary pause
+		print(test + "")
 
-	# Calculate time, wpm and accuracy
-	text, elapsed = calc_time()
-	wpm = calc_wpm(elapsed, text)
-	acc = calc_accuracy(test, text)
+		# Calculate time, wpm and accuracy
+		text, elapsed = calc_time()
+		wpm = calc_wpm(elapsed, text)
+		acc = calc_accuracy(test, text)
 
-	# Print calculated details
-	print("\nTotal time elapsed = " + str(round(elapsed,2)))
-	print("\nAverage wpm = " + str(round(wpm,2)))
-	print("\nAccuracy = " + str(round(acc,2)))
-	
-	# Provide choice to continue or end
-	choice = input("Continue testing (y/n) ?\t")
-	if(choice=='n'):
-		break
-	elif(choice=='y'):
-		continue
-	else:
-		print("Great! You opted for random choice!\n")
-		if(randint(0,1)):
+		# Print calculated details
+		mins = int(elapsed)
+		seconds = int(60*(elapsed - mins))
+		if(elapsed < 1):
+			print("\nTotal time elapsed = " + str(seconds) + " seconds")
+		else:
+			print("\nTotal time elapsed = " + str(mins) + " mins " + str(seconds) + " seconds")
+		print("\nAverage wpm = " + str(round(wpm,2)))
+		print("\nAccuracy = " + str(round(acc,2)))
+		
+		# Provide choice to continue or end
+		choice = input("Continue testing (y/n) ?\t")
+		if(choice=='n'):
+			break
+		elif(choice=='y'):
 			continue
 		else:
-			break
+			print("Great! You opted for random choice!\n")
+			if(randint(0,1)):
+				continue
+			else:
+				break
